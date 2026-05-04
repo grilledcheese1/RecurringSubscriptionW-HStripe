@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Equipment Rental Billing",
-  description: "Secure recurring billing portal",
+  title: "PowerDillo — IT Construction, Subcontracting & Equipment Rental",
+  description: "PowerDillo delivers integrated solutions across IT construction, subcontracting, and equipment rental.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
