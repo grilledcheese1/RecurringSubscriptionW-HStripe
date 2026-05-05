@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "../icon.png";
+import SmartCityNetwork from "@/app/components/SmartCityNetwork";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 type Availability = "available" | "limited" | "unavailable";
@@ -183,7 +184,7 @@ export default function DashboardPage() {
               <Link href="/dashboard" className="font-extrabold text-orange-500">Rentals &amp; Solutions</Link>
             </div>
           </div>
-          <div className="pl-16">
+          <div className="pl-20">
             <Link href="/billing" className="text-sm font-semibold px-4 py-2 rounded-lg border border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white transition-colors whitespace-nowrap">
               Client Portal
             </Link>
@@ -192,17 +193,22 @@ export default function DashboardPage() {
       </nav>
 
       {/* ── Header ───────────────────────────────────────────────────────────── */}
-      <section className="bg-[#141413] text-white py-14 px-6 relative overflow-hidden">
+      <section className="bg-[#141413] text-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-[0.05] pointer-events-none" style={{ backgroundImage: "linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px)", backgroundSize: "48px 48px" }} />
         <div className="absolute -top-20 -right-20 w-80 h-80 rounded-full bg-[#d97757]/10 blur-[90px] pointer-events-none" />
-        <div className="relative max-w-6xl mx-auto">
-          <p className="text-xs font-mono tracking-widest uppercase text-orange-500 mb-3">Equipment Rental</p>
-          <h1 className="text-5xl font-bold tracking-tight mb-3" style={{ fontFamily: "'Poppins','Arial',sans-serif" }}>
-            Rentals &amp; Solutions
-          </h1>
-          <p className="text-gray-400 text-base max-w-xl leading-relaxed" style={{ fontFamily: "'Lora','Georgia',serif" }}>
-            Professional-grade equipment on your timeline. Browse available units, then choose the rental term that fits your project.
-          </p>
+        <div className="relative max-w-6xl mx-auto flex items-stretch">
+          <div className="flex-1 flex flex-col justify-center py-14 px-6 pr-10">
+            <p className="text-xs font-mono tracking-widest uppercase text-orange-500 mb-3">Equipment Rental</p>
+            <h1 className="text-5xl font-bold tracking-tight mb-3" style={{ fontFamily: "'Poppins','Arial',sans-serif" }}>
+              Rentals &amp; Solutions
+            </h1>
+            <p className="text-gray-400 text-base max-w-xl leading-relaxed" style={{ fontFamily: "'Lora','Georgia',serif" }}>
+              Professional-grade equipment on your timeline. Browse available units, then choose the rental term that fits your project.
+            </p>
+          </div>
+          <div className="hidden lg:block relative overflow-hidden" style={{ width: "550px", flexShrink: 0, pointerEvents: "none" }}>
+            <SmartCityNetwork />
+          </div>
         </div>
       </section>
 

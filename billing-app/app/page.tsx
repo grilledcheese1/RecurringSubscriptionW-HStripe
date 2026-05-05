@@ -136,10 +136,10 @@ export default function LandingPage() {
         />
         <div className="absolute -top-32 -right-32 w-[500px] h-[500px] rounded-full bg-orange-500/10 blur-[120px] pointer-events-none" />
 
-        <div className="relative max-w-7xl mx-auto px-6 py-20 md:py-28 grid md:grid-cols-[1fr_440px] gap-10 lg:gap-16 items-center">
+        <div className="relative max-w-6xl mx-auto px-6 py-20 md:py-28 grid md:grid-cols-[1fr_440px] gap-10 lg:gap-16 items-center">
 
           {/* ── Text ──────────────────────────────────────────────────────────── */}
-          <div>
+          <div style={{ marginLeft: "1.5px" }}>
             <h1
               className="text-8xl md:text-7xl font-bold leading-[1.1] tracking-tight mb-6"
               style={{ fontFamily: "'Georgia', serif" }}
@@ -161,7 +161,7 @@ export default function LandingPage() {
 
             <p
               className="text-gray-500 text-lg mb-10 flex items-center gap-2"
-              style={{ opacity: 0, animationName: "fadeInLetter", animationDuration: "0.3s", animationFillMode: "forwards", animationDelay: "2.55s" }}
+              style={{ opacity: 0, animationName: "fadeInLetter", animationDuration: "0.3s", animationFillMode: "forwards", animationDelay: "2.55s", marginLeft: "-8px" }}
             >
               <span aria-hidden>️</span>
               Veteran Owned &amp; Operated — Built on service, driven by results.
@@ -182,7 +182,7 @@ export default function LandingPage() {
           {/* ── Blueprint 3D ───────────────────────────────────────────────────── */}
           <div
             className="hidden md:block rounded-2xl overflow-hidden border border-blue-900/40 shadow-2xl shadow-blue-950/60"
-            style={{ height: "520px" }}
+            style={{ height: "520px", marginLeft: "-0.5px" }}
           >
             <BlueprintAnimation />
           </div>
