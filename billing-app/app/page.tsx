@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import BlueprintAnimation from "@/app/components/BlueprintAnimation";
 
 // ── Letter-by-letter fade-in ─────────────────────────────────────────────────
 function AnimatedLine({
@@ -21,9 +22,9 @@ function AnimatedLine({
           style={{
             opacity: 0,
             animationName: "fadeInLetter",
-            animationDuration: "0.15s",
+            animationDuration: "0.12s",
             animationFillMode: "forwards",
-            animationDelay: `${(startDelay + i * 0.03).toFixed(2)}s`,
+            animationDelay: `${(startDelay + i * 0.025).toFixed(3)}s`,
           }}
         >
           {char}
@@ -33,10 +34,10 @@ function AnimatedLine({
   );
 }
 
-// ── Line 1: "One Company."     starts at 0.70s  (12 chars × 0.03s = last at 1.03s)
-// ── Line 2: "Three Divisions." starts at 1.35s  (16 chars × 0.03s = last at 1.78s)
-// ── Line 3: "No Limits."       starts at 2.10s  (10 chars × 0.03s = last at 2.35s)
-// ── Section below             fades in at 2.50s
+// ── Line 1: "One Company."     starts at 0.70s  (12 chars × 0.025s = last at 0.975s)
+// ── Line 2: "Three Divisions." starts at 1.20s  (16 chars × 0.025s = last at 1.575s)
+// ── Line 3: "No Limits."       starts at 1.80s  (10 chars × 0.025s = last at 2.025s)
+// ── Para fades at 2.25s, Veteran at 2.55s, Button at 2.80s
 
 // ── Data ────────────────────────────────────────────────────────────────────
 const services = [
@@ -116,7 +117,7 @@ export default function LandingPage() {
       {/* ── Hero ─────────────────────────────────────────────────────────────── */}
       <section className="relative overflow-hidden bg-gray-950 text-white">
         <div
-          className="absolute inset-0 opacity-[0.04] pointer-events-none"
+          className="absolute inset-0 opacity-[0.06] pointer-events-none"
           style={{
             backgroundImage:
               "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
@@ -125,33 +126,33 @@ export default function LandingPage() {
         />
         <div className="absolute -top-32 -right-32 w-[500px] h-[500px] rounded-full bg-orange-500/10 blur-[120px] pointer-events-none" />
 
-        <div className="relative max-w-6xl mx-auto px-6 py-28 md:py-36">
-          <h1
-            className="text-5xl md:text-7xl font-bold leading-[1.1] tracking-tight mb-6 max-w-3xl"
-            style={{ fontFamily: "'Georgia', serif" }}
-          >
-            <AnimatedLine text="One Company." startDelay={0.7} />
-            <br />
-            <AnimatedLine text="Three Divisions." startDelay={1.35} className="text-orange-400" />
-            <br />
-            <AnimatedLine text="No Limits." startDelay={2.1} />
-          </h1>
+        <div className="relative max-w-6xl mx-auto px-6 py-20 md:py-28 grid md:grid-cols-[1fr_440px] gap-10 lg:gap-16 items-center">
 
-          <div
-            style={{
-              opacity: 0,
-              animationName: "fadeInLetter",
-              animationDuration: "0.4s",
-              animationFillMode: "forwards",
-              animationDelay: "2.5s",
-            }}
-          >
-            <p className="text-gray-400 text-lg md:text-xl max-w-xl mb-4 leading-relaxed">
+          {/* ── Text ──────────────────────────────────────────────────────────── */}
+          <div>
+            <h1
+              className="text-5xl md:text-6xl font-bold leading-[1.1] tracking-tight mb-6"
+              style={{ fontFamily: "'Georgia', serif" }}
+            >
+              <AnimatedLine text="One Company." startDelay={0.7} />
+              <br />
+              <AnimatedLine text="Three Divisions." startDelay={1.2} className="text-orange-400" />
+              <br />
+              <AnimatedLine text="No Limits." startDelay={1.8} />
+            </h1>
+
+            <p
+              className="text-gray-400 text-lg max-w-md mb-4 leading-relaxed"
+              style={{ opacity: 0, animationName: "fadeInLetter", animationDuration: "0.3s", animationFillMode: "forwards", animationDelay: "2.25s" }}
+            >
               PowerDillo delivers integrated solutions across IT construction, subcontracting, and
               equipment rental — all under one standard of excellence.
             </p>
 
-            <p className="text-gray-500 text-sm mb-10 flex items-center gap-2">
+            <p
+              className="text-gray-500 text-sm mb-10 flex items-center gap-2"
+              style={{ opacity: 0, animationName: "fadeInLetter", animationDuration: "0.3s", animationFillMode: "forwards", animationDelay: "2.55s" }}
+            >
               <span aria-hidden>🎖️</span>
               Veteran Owned &amp; Operated — Built on service, driven by results.
             </p>
@@ -159,6 +160,7 @@ export default function LandingPage() {
             <a
               href="#services"
               className="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-400 text-white font-semibold px-8 py-4 rounded-xl text-sm transition-colors"
+              style={{ opacity: 0, animationName: "fadeInLetter", animationDuration: "0.3s", animationFillMode: "forwards", animationDelay: "2.8s" }}
             >
               Explore Our Services
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -166,6 +168,15 @@ export default function LandingPage() {
               </svg>
             </a>
           </div>
+
+          {/* ── Blueprint 3D ───────────────────────────────────────────────────── */}
+          <div
+            className="hidden md:block rounded-2xl overflow-hidden border border-blue-900/40 shadow-2xl shadow-blue-950/60"
+            style={{ height: "520px" }}
+          >
+            <BlueprintAnimation />
+          </div>
+
         </div>
       </section>
 
