@@ -108,6 +108,9 @@ export default function LandingPage() {
               <a href="#contact" className="font-extrabold hover:text-orange-500 transition-colors">
                 Contact
               </a>
+              <Link href="/dashboard" className="font-extrabold hover:text-orange-500 transition-colors">
+                Rentals &amp; Solutions
+              </Link>
             </div>
           </div>
           <div className="pl-20">
