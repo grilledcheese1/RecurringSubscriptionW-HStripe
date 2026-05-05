@@ -1,10 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "../icon.png";
 import SmartCityNetwork from "@/app/components/SmartCityNetwork";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 type Availability = "available" | "limited" | "unavailable";
@@ -165,6 +168,25 @@ export default function DashboardPage() {
            (filterCat   === "all" || p.category    === filterCat)
   );
 
+  useEffect(() => {
+    const cards = gsap.utils.toArray<HTMLElement>(".product-card");
+    cards.forEach((card) => {
+      gsap.set(card, { x: -250, opacity: 0 });
+      gsap.to(card, {
+        scrollTrigger: {
+          trigger: card,
+          start: "top 90%",
+          once: true,
+        },
+        x: 0,
+        opacity: 1,
+        duration: 1.0,
+        ease: "power3.out",
+      });
+    });
+    return () => { ScrollTrigger.getAll().forEach(t => t.kill()); };
+  }, []);
+
   return (
     <div className="min-h-screen text-[#141413] font-sans" style={{ backgroundColor: "#faf9f5" }}>
 
@@ -186,7 +208,7 @@ export default function DashboardPage() {
           </div>
           <div className="pl-20">
             <Link href="/billing" className="text-sm font-semibold px-4 py-2 rounded-lg border border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white transition-colors whitespace-nowrap">
-              Client Portal
+              Log In
             </Link>
           </div>
         </div>
@@ -331,7 +353,7 @@ export default function DashboardPage() {
               <p className="text-xs text-gray-400 mb-5">
                 {filtered.length} {filtered.length === 1 ? "product" : "products"} available
               </p>
-              <div className="space-y-4">
+              <div className="space-y-4 products-list">
                 {filtered.length === 0 ? (
                   <div className="text-center py-16 text-gray-400 text-sm">
                     No products match your filters.{" "}
@@ -344,7 +366,7 @@ export default function DashboardPage() {
                   const canRent = product.availability !== "unavailable";
 
                   return (
-                    <div key={product.id} className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all overflow-hidden">
+                    <div key={product.id} className="product-card bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all overflow-hidden">
 
                       {/* Card header — always visible */}
                       <div className="p-6">
@@ -398,7 +420,7 @@ export default function DashboardPage() {
                         <button
                           disabled={!canRent}
                           onClick={() => canRent && setSelectedProduct(product)}
-                          className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-semibold transition-colors ${canRent ? "bg-orange-500 hover:bg-orange-500 text-white" : "bg-gray-100 text-gray-400 cursor-not-allowed"}`}
+                          className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-semibold transition-colors ${canRent ? "bg-orange-500 hover:bg-orange-400 text-white" : "bg-gray-100 text-gray-400 cursor-not-allowed"}`}
                         >
                           {canRent ? "Rent This" : "Unavailable"}
                           {canRent && (

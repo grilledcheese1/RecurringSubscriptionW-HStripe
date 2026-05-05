@@ -1,10 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "./icon.png";
 import BlueprintAnimation from "@/app/components/BlueprintAnimation";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
 
 // ── Letter-by-letter fade-in ─────────────────────────────────────────────────
 function AnimatedLine({
@@ -87,6 +90,24 @@ export default function LandingPage() {
     setSubmitted(true);
   }
 
+  useEffect(() => {
+    const cards = gsap.utils.toArray<HTMLElement>(".service-card");
+    gsap.set(cards, { y: 60, opacity: 0 });
+    gsap.to(cards, {
+      scrollTrigger: {
+        trigger: ".services-grid",
+        start: "top 80%",
+        once: true,
+      },
+      y: 0,
+      opacity: 1,
+      duration: 0.7,
+      stagger: 0.15,
+      ease: "power3.out",
+    });
+    return () => { ScrollTrigger.getAll().forEach(t => t.kill()); };
+  }, []);
+
   return (
     <div className="min-h-screen bg-white text-gray-900 font-sans">
 
@@ -118,7 +139,7 @@ export default function LandingPage() {
               href="/billing"
               className="text-sm font-semibold px-4 py-2 rounded-lg border border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white transition-colors whitespace-nowrap"
             >
-              Client Portal
+              Log In
             </Link>
           </div>
         </div>
@@ -206,11 +227,11 @@ export default function LandingPage() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-3 gap-6 services-grid">
             {services.map((s) => (
               <div
                 key={s.title}
-                className="bg-white rounded-2xl p-8 border border-gray-100 shadow-sm hover:shadow-md hover:border-orange-100 transition-all group flex flex-col"
+                className="service-card bg-white rounded-2xl p-8 border border-gray-100 shadow-sm hover:shadow-md hover:border-orange-100 transition-all group flex flex-col"
               >
                 <div className="w-12 h-12 rounded-xl bg-orange-50 text-orange-500 flex items-center justify-center mb-6 group-hover:bg-orange-500 group-hover:text-white transition-colors shrink-0">
                   {s.icon}
