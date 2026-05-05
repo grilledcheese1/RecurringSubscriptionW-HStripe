@@ -133,12 +133,12 @@ export default function LandingPage() {
         />
         <div className="absolute -top-32 -right-32 w-[500px] h-[500px] rounded-full bg-orange-500/10 blur-[120px] pointer-events-none" />
 
-        <div className="relative max-w-6xl mx-auto px-6 py-20 md:py-28 grid md:grid-cols-[1fr_440px] gap-10 lg:gap-16 items-center">
+        <div className="relative max-w-7xl mx-auto px-6 py-20 md:py-28 grid md:grid-cols-[1fr_440px] gap-10 lg:gap-16 items-center">
 
           {/* ── Text ──────────────────────────────────────────────────────────── */}
           <div>
             <h1
-              className="text-5xl md:text-6xl font-bold leading-[1.1] tracking-tight mb-6"
+              className="text-8xl md:text-7xl font-bold leading-[1.1] tracking-tight mb-6"
               style={{ fontFamily: "'Georgia', serif" }}
             >
               <AnimatedLine text="One Company." startDelay={0.7} />
@@ -149,7 +149,7 @@ export default function LandingPage() {
             </h1>
 
             <p
-              className="text-gray-400 text-lg max-w-md mb-4 leading-relaxed"
+              className="text-gray-400 text-xl max-w-md mb-4 leading-relaxed"
               style={{ opacity: 0, animationName: "fadeInLetter", animationDuration: "0.3s", animationFillMode: "forwards", animationDelay: "2.25s" }}
             >
               PowerDillo delivers integrated solutions across IT construction, subcontracting, and
@@ -157,7 +157,7 @@ export default function LandingPage() {
             </p>
 
             <p
-              className="text-gray-500 text-sm mb-10 flex items-center gap-2"
+              className="text-gray-500 text-lg mb-10 flex items-center gap-2"
               style={{ opacity: 0, animationName: "fadeInLetter", animationDuration: "0.3s", animationFillMode: "forwards", animationDelay: "2.55s" }}
             >
               <span aria-hidden>️</span>
