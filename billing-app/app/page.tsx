@@ -3,6 +3,42 @@
 import { useState } from "react";
 import Link from "next/link";
 
+// ── Letter-by-letter fade-in ─────────────────────────────────────────────────
+function AnimatedLine({
+  text,
+  startDelay,
+  className = "",
+}: {
+  text: string;
+  startDelay: number;
+  className?: string;
+}) {
+  return (
+    <span className={className}>
+      {text.split("").map((char, i) => (
+        <span
+          key={i}
+          style={{
+            opacity: 0,
+            animationName: "fadeInLetter",
+            animationDuration: "0.15s",
+            animationFillMode: "forwards",
+            animationDelay: `${(startDelay + i * 0.03).toFixed(2)}s`,
+          }}
+        >
+          {char}
+        </span>
+      ))}
+    </span>
+  );
+}
+
+// ── Line 1: "One Company."     starts at 0.70s  (12 chars × 0.03s = last at 1.03s)
+// ── Line 2: "Three Divisions." starts at 1.35s  (16 chars × 0.03s = last at 1.78s)
+// ── Line 3: "No Limits."       starts at 2.10s  (10 chars × 0.03s = last at 2.35s)
+// ── Section below             fades in at 2.50s
+
+// ── Data ────────────────────────────────────────────────────────────────────
 const services = [
   {
     icon: (
@@ -38,6 +74,7 @@ const services = [
 
 const serviceOptions = ["IT Construction", "Subcontracting", "Equipment Rental", "General Inquiry"];
 
+// ── Page ─────────────────────────────────────────────────────────────────────
 export default function LandingPage() {
   const [formData, setFormData] = useState({ name: "", email: "", service: "", message: "" });
   const [submitted, setSubmitted] = useState(false);
@@ -50,70 +87,97 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-white text-gray-900 font-sans">
 
-      {/* ── Navigation ─────────────────────────────────────────────── */}
+      {/* ── Navigation ───────────────────────────────────────────────────────── */}
       <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-gray-100">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-          <span className="text-xl font-bold tracking-tight">
+          <span className="text-xl font-bold tracking-tight shrink-0">
             Power<span className="text-orange-500">Dillo</span>
           </span>
-          <div className="hidden sm:flex items-center gap-8 text-sm text-gray-600">
-            <a href="#services" className="hover:text-orange-500 transition-colors">Services</a>
-            <a href="#contact" className="hover:text-orange-500 transition-colors">Contact</a>
+
+          <div className="flex items-center gap-6 ml-auto">
+            <div className="hidden sm:flex items-center gap-8 text-sm text-gray-600">
+              <a href="#services" className="font-bold hover:text-orange-500 transition-colors">
+                Services
+              </a>
+              <a href="#contact" className="font-bold hover:text-orange-500 transition-colors">
+                Contact
+              </a>
+            </div>
+            <Link
+              href="/billing"
+              className="text-sm font-semibold px-4 py-2 rounded-lg border border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white transition-colors whitespace-nowrap"
+            >
+              Client Portal
+            </Link>
           </div>
-          <Link
-            href="/billing"
-            className="text-sm font-semibold px-4 py-2 rounded-lg border border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white transition-colors"
-          >
-            Client Portal
-          </Link>
         </div>
       </nav>
 
-      {/* ── Hero ───────────────────────────────────────────────────── */}
+      {/* ── Hero ─────────────────────────────────────────────────────────────── */}
       <section className="relative overflow-hidden bg-gray-950 text-white">
-        <div className="absolute inset-0 opacity-[0.04] pointer-events-none"
+        <div
+          className="absolute inset-0 opacity-[0.04] pointer-events-none"
           style={{
-            backgroundImage: "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
+            backgroundImage:
+              "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
             backgroundSize: "48px 48px",
           }}
         />
         <div className="absolute -top-32 -right-32 w-[500px] h-[500px] rounded-full bg-orange-500/10 blur-[120px] pointer-events-none" />
 
         <div className="relative max-w-6xl mx-auto px-6 py-28 md:py-36">
-          <div className="inline-flex items-center gap-2 text-xs font-mono tracking-widest uppercase text-orange-400/80 border border-orange-500/20 px-4 py-1.5 rounded-full mb-8">
-            <span className="w-1.5 h-1.5 rounded-full bg-orange-400 animate-pulse" />
-            IT · Subcontracting · Equipment Rental
-          </div>
-
-          <h1 className="text-5xl md:text-7xl font-bold leading-[1.05] tracking-tight mb-6 max-w-3xl"
-            style={{ fontFamily: "'Georgia', serif" }}>
-            One Company.<br />
-            <span className="text-orange-400">Three Divisions.</span><br />
-            No Limits.
+          <h1
+            className="text-5xl md:text-7xl font-bold leading-[1.1] tracking-tight mb-6 max-w-3xl"
+            style={{ fontFamily: "'Georgia', serif" }}
+          >
+            <AnimatedLine text="One Company." startDelay={0.7} />
+            <br />
+            <AnimatedLine text="Three Divisions." startDelay={1.35} className="text-orange-400" />
+            <br />
+            <AnimatedLine text="No Limits." startDelay={2.1} />
           </h1>
 
-          <p className="text-gray-400 text-lg md:text-xl max-w-xl mb-10 leading-relaxed">
-            PowerDillo delivers integrated solutions across IT construction, subcontracting, and equipment rental — all under one standard of excellence.
-          </p>
-
-          <a
-            href="#services"
-            className="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-400 text-white font-semibold px-8 py-4 rounded-xl text-sm transition-colors"
+          <div
+            style={{
+              opacity: 0,
+              animationName: "fadeInLetter",
+              animationDuration: "0.4s",
+              animationFillMode: "forwards",
+              animationDelay: "2.5s",
+            }}
           >
-            Explore Our Services
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-            </svg>
-          </a>
+            <p className="text-gray-400 text-lg md:text-xl max-w-xl mb-4 leading-relaxed">
+              PowerDillo delivers integrated solutions across IT construction, subcontracting, and
+              equipment rental — all under one standard of excellence.
+            </p>
+
+            <p className="text-gray-500 text-sm mb-10 flex items-center gap-2">
+              <span aria-hidden>🎖️</span>
+              Veteran Owned &amp; Operated — Built on service, driven by results.
+            </p>
+
+            <a
+              href="#services"
+              className="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-400 text-white font-semibold px-8 py-4 rounded-xl text-sm transition-colors"
+            >
+              Explore Our Services
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </a>
+          </div>
         </div>
       </section>
 
-      {/* ── Services ───────────────────────────────────────────────── */}
+      {/* ── Services ─────────────────────────────────────────────────────────── */}
       <section id="services" className="py-24 bg-gray-50">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
             <p className="text-xs font-mono tracking-widest uppercase text-orange-500 mb-3">What We Do</p>
-            <h2 className="text-4xl font-bold tracking-tight" style={{ fontFamily: "'Georgia', serif" }}>
+            <h2
+              className="text-4xl font-bold tracking-tight"
+              style={{ fontFamily: "'Georgia', serif" }}
+            >
               Our Divisions
             </h2>
             <p className="text-gray-500 mt-4 max-w-md mx-auto text-sm leading-relaxed">
@@ -123,8 +187,11 @@ export default function LandingPage() {
 
           <div className="grid md:grid-cols-3 gap-6">
             {services.map((s) => (
-              <div key={s.title} className="bg-white rounded-2xl p-8 border border-gray-100 shadow-sm hover:shadow-md hover:border-orange-100 transition-all group">
-                <div className="w-12 h-12 rounded-xl bg-orange-50 text-orange-500 flex items-center justify-center mb-6 group-hover:bg-orange-500 group-hover:text-white transition-colors">
+              <div
+                key={s.title}
+                className="bg-white rounded-2xl p-8 border border-gray-100 shadow-sm hover:shadow-md hover:border-orange-100 transition-all group flex flex-col"
+              >
+                <div className="w-12 h-12 rounded-xl bg-orange-50 text-orange-500 flex items-center justify-center mb-6 group-hover:bg-orange-500 group-hover:text-white transition-colors shrink-0">
                   {s.icon}
                 </div>
                 <h3 className="text-lg font-bold mb-3">{s.title}</h3>
@@ -135,14 +202,19 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── Contact ────────────────────────────────────────────────── */}
+      {/* ── Contact ──────────────────────────────────────────────────────────── */}
       <section id="contact" className="py-24 bg-white">
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid md:grid-cols-2 gap-16 items-start">
 
-            <div>
-              <p className="text-xs font-mono tracking-widest uppercase text-orange-500 mb-3">Get In Touch</p>
-              <h2 className="text-4xl font-bold tracking-tight mb-5" style={{ fontFamily: "'Georgia', serif" }}>
+            <div className="flex flex-col justify-start">
+              <p className="text-xs font-mono tracking-widest uppercase text-orange-500 mb-3">
+                Get In Touch
+              </p>
+              <h2
+                className="text-4xl font-bold tracking-tight mb-5"
+                style={{ fontFamily: "'Georgia', serif" }}
+              >
                 Request a Quote
               </h2>
               <p className="text-gray-500 text-sm leading-relaxed mb-10">
@@ -184,7 +256,7 @@ export default function LandingPage() {
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-medium text-gray-700 mb-1.5">Name</label>
+                      <label className="block text-xs font-bold text-gray-700 mb-1.5">Name</label>
                       <input
                         required
                         type="text"
@@ -195,7 +267,7 @@ export default function LandingPage() {
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-medium text-gray-700 mb-1.5">Email</label>
+                      <label className="block text-xs font-bold text-gray-700 mb-1.5">Email</label>
                       <input
                         required
                         type="email"
@@ -208,7 +280,7 @@ export default function LandingPage() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-medium text-gray-700 mb-1.5">Service Interest</label>
+                    <label className="block text-xs font-bold text-gray-700 mb-1.5">Service Interest</label>
                     <select
                       value={formData.service}
                       onChange={(e) => setFormData({ ...formData, service: e.target.value })}
@@ -222,7 +294,7 @@ export default function LandingPage() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-medium text-gray-700 mb-1.5">Message</label>
+                    <label className="block text-xs font-bold text-gray-700 mb-1.5">Message</label>
                     <textarea
                       required
                       rows={4}
@@ -247,14 +319,21 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── Footer ─────────────────────────────────────────────────── */}
-      <footer className="bg-gray-950 text-gray-500 py-10 px-6">
-        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
+      {/* ── Footer ───────────────────────────────────────────────────────────── */}
+      <footer className="bg-gray-950 text-gray-500 py-12 px-6">
+        <div className="max-w-6xl mx-auto flex flex-col items-center gap-4 text-xs text-center">
           <span className="text-white font-bold text-base tracking-tight">
             Power<span className="text-orange-500">Dillo</span>
           </span>
           <span>IT Construction · Subcontracting · Equipment Rental</span>
-          <span>© {new Date().getFullYear()} PowerDillo. All rights reserved.</span>
+          <p className="text-gray-400 flex items-center gap-2">
+            <span aria-hidden>🎖️</span>
+            Veteran Owned &amp; Operated — Proudly serving our clients with the same commitment and
+            discipline instilled through military service.
+          </p>
+          <span className="text-gray-600 mt-2">
+            © {new Date().getFullYear()} PowerDillo. All rights reserved.
+          </span>
         </div>
       </footer>
 
