@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
+import logo from "./icon.png";
 import BlueprintAnimation from "@/app/components/BlueprintAnimation";
 
 // ── Letter-by-letter fade-in ─────────────────────────────────────────────────
@@ -90,20 +92,25 @@ export default function LandingPage() {
 
       {/* ── Navigation ───────────────────────────────────────────────────────── */}
       <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-gray-100">
-        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-          <span className="text-xl font-bold tracking-tight shrink-0">
-            Power<span className="text-orange-500">Dillo</span>
-          </span>
+        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-2 shrink-0">
+            <Image src={logo} alt="PowerDillo logo" width={54} height={54} className="rounded-md" />
+            <span className="text-2xl font-bold tracking-tight">
+              Power<span className="text-orange-500">Dillo</span>
+            </span>
+          </div>
 
           <div className="flex items-center gap-6 ml-auto">
             <div className="hidden sm:flex items-center gap-8 text-sm text-gray-600">
-              <a href="#services" className="font-bold hover:text-orange-500 transition-colors">
+              <a href="#services" className="font-extrabold hover:text-orange-500 transition-colors">
                 Services
               </a>
-              <a href="#contact" className="font-bold hover:text-orange-500 transition-colors">
+              <a href="#contact" className="font-extrabold hover:text-orange-500 transition-colors">
                 Contact
               </a>
             </div>
+          </div>
+          <div className="pl-20">
             <Link
               href="/billing"
               className="text-sm font-semibold px-4 py-2 rounded-lg border border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white transition-colors whitespace-nowrap"
@@ -153,7 +160,7 @@ export default function LandingPage() {
               className="text-gray-500 text-sm mb-10 flex items-center gap-2"
               style={{ opacity: 0, animationName: "fadeInLetter", animationDuration: "0.3s", animationFillMode: "forwards", animationDelay: "2.55s" }}
             >
-              <span aria-hidden>🎖️</span>
+              <span aria-hidden>️</span>
               Veteran Owned &amp; Operated — Built on service, driven by results.
             </p>
 
@@ -338,7 +345,7 @@ export default function LandingPage() {
           </span>
           <span>IT Construction · Subcontracting · Equipment Rental</span>
           <p className="text-gray-400 flex items-center gap-2">
-            <span aria-hidden>🎖️</span>
+            <span aria-hidden></span>
             Veteran Owned &amp; Operated — Proudly serving our clients with the same commitment and
             discipline instilled through military service.
           </p>
