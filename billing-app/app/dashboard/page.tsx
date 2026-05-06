@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "../icon.png";
@@ -160,6 +161,7 @@ const categories = Array.from(new Set(products.map((p) => p.category)));
 // ── Page ─────────────────────────────────────────────────────────────────────
 export default function DashboardPage() {
   const { data: session } = useSession();
+  const router = useRouter();
   const [activeTab, setActiveTab]             = useState<"rentals" | "my-rentals">("rentals");
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [expandedCard, setExpandedCard]       = useState<string | null>(null);
@@ -331,7 +333,14 @@ export default function DashboardPage() {
                       </li>
                     ))}
                   </ul>
-                  <button className={`w-full py-2.5 rounded-xl text-xs font-semibold transition-colors ${tier.badge ? "bg-orange-500 hover:bg-orange-500 text-white" : "border border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white"}`}>
+                  <button
+                    onClick={() =>
+                      router.push(
+                        `/billing?plan=${tier.id}&product=${selectedProduct.id}&productName=${encodeURIComponent(selectedProduct.name)}`
+                      )
+                    }
+                    className={`w-full py-2.5 rounded-xl text-xs font-semibold transition-colors cursor-pointer ${tier.badge ? "bg-orange-500 hover:bg-orange-400 text-white" : "border border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white"}`}
+                  >
                     {tier.cta}
                   </button>
                 </div>
