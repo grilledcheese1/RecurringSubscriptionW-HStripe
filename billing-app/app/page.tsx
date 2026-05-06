@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import logo from "./icon.png";
 import BlueprintAnimation from "@/app/components/BlueprintAnimation";
+import { NavAuthButton } from "@/app/components/NavAuthButton";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
@@ -135,12 +136,7 @@ export default function LandingPage() {
             </div>
           </div>
           <div className="pl-20">
-            <Link
-              href="/billing"
-              className="text-sm font-semibold px-4 py-2 rounded-lg border border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white transition-colors whitespace-nowrap"
-            >
-              Log In
-            </Link>
+            <NavAuthButton fallbackLabel="Log In" fallbackHref="/login" />
           </div>
         </div>
       </nav>
