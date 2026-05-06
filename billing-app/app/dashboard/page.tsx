@@ -5,6 +5,8 @@ import Link from "next/link";
 import Image from "next/image";
 import logo from "../icon.png";
 import SmartCityNetwork from "@/app/components/SmartCityNetwork";
+import { NavAuthButton } from "@/app/components/NavAuthButton";
+import { useSession } from "next-auth/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
@@ -157,6 +159,7 @@ const categories = Array.from(new Set(products.map((p) => p.category)));
 
 // ── Page ─────────────────────────────────────────────────────────────────────
 export default function DashboardPage() {
+  const { data: session } = useSession();
   const [activeTab, setActiveTab]             = useState<"rentals" | "my-rentals">("rentals");
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [expandedCard, setExpandedCard]       = useState<string | null>(null);
@@ -207,9 +210,7 @@ export default function DashboardPage() {
             </div>
           </div>
           <div className="pl-20">
-            <Link href="/billing" className="text-sm font-semibold px-4 py-2 rounded-lg border border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white transition-colors whitespace-nowrap">
-              Log In
-            </Link>
+            <NavAuthButton fallbackLabel="Log In" fallbackHref="/login" />
           </div>
         </div>
       </nav>
@@ -265,9 +266,11 @@ export default function DashboardPage() {
               <button onClick={() => setActiveTab("rentals")} className="px-6 py-3 bg-orange-500 hover:bg-orange-500 text-white text-sm font-semibold rounded-xl transition-colors">
                 Browse Rentals
               </button>
-              <Link href="/billing" className="px-6 py-3 border border-gray-200 hover:border-orange-500 text-gray-700 hover:text-orange-500 text-sm font-semibold rounded-xl transition-colors">
-                Sign In
-              </Link>
+              {!session && (
+                <Link href="/login" className="px-6 py-3 border border-gray-200 hover:border-orange-500 text-gray-700 hover:text-orange-500 text-sm font-semibold rounded-xl transition-colors">
+                  Sign In
+                </Link>
+              )}
             </div>
           </div>
         </section>
